@@ -9,16 +9,13 @@ export default function Footer() {
   const [year, setYear] = useState('');
 
   useEffect(() => {
-    // Ensure year is set on client only
     setYear(new Date().getFullYear());
   }, []);
 
   return (
     <footer className="w-full relative z-10 bg-gradient-to-b from-white to-[#E8F5E9] border-t border-white/20 shadow-[0_1px_10px_rgba(0,0,0,0.05)] backdrop-blur-md">
-      {/* Animated Top Accent Line (hydration safe) */}
       <div className="h-1 w-full bg-gradient-to-r from-green-500 to-green-700 animate-pulse-slow" />
 
-      {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 py-16 space-y-16">
         {/* Branding and App Links */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-10">
@@ -41,6 +38,7 @@ export default function Footer() {
                       : 'mailto:hello@everwell.com'
                   }
                   target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.1 }}
                   className="text-gray-600 hover:text-green-700 transition"
                 >
@@ -52,18 +50,18 @@ export default function Footer() {
 
           {/* App Store Buttons */}
           <div className="flex gap-4">
-            <a
+            <Link
               href="#"
               className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-green-700 text-white rounded-xl text-sm shadow hover:scale-105 transition"
             >
               <Apple className="w-4 h-4" /> App Store
-            </a>
-            <a
+            </Link>
+            <Link
               href="#"
               className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-green-700 text-white rounded-xl text-sm shadow hover:scale-105 transition"
             >
               <Play className="w-4 h-4" /> Play Store
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -72,7 +70,7 @@ export default function Footer() {
           <FooterLinkGroup title="Product" links={['Features', 'Pricing', 'Community', 'Integrations']} />
           <FooterLinkGroup title="Company" links={['About Us', 'Blog', 'Careers', 'Contact']} />
           <FooterLinkGroup title="Resources" links={['Help Center', 'FAQs', 'Guides', 'API Docs']} />
-          
+
           {/* Subscription Box */}
           <div>
             <p className="font-semibold text-gray-800 mb-3">Subscribe</p>
@@ -100,7 +98,7 @@ export default function Footer() {
         </div>
       )}
       <div className="w-full text-center py-4 text-sm text-green-700 font-medium animate-pulse-slow">
-        "Pause. Breathe. Reconnect with your focus."
+        &quot;Pause. Breathe. Reconnect with your focus.&quot;
       </div>
 
       {/* Pulse Animation */}

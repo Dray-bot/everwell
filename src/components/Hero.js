@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Hero() {
   return (
@@ -43,7 +44,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-lg md:text-xl text-gray-600 max-w-lg leading-relaxed"
           >
-            A wellness-first approach to screen time, crafted for mindful living. It's not just another tracker—it's your digital reset button.
+            A wellness-first approach to screen time, crafted for mindful living. It&apos;s not just another tracker—it&apos;s your digital reset button.
           </motion.p>
 
           <motion.div
@@ -52,12 +53,12 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex justify-center md:justify-start gap-4"
           >
-            <a
+            <Link
               href="/sign-up"
               className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl text-base font-semibold shadow-md transition"
             >
               Get Started
-            </a>
+            </Link>
             <a
               href="#features"
               className="px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-xl text-base font-semibold shadow-sm hover:shadow-md transition"
