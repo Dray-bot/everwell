@@ -1,80 +1,63 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import Tilt from 'react-parallax-tilt';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRef } from 'react';
 
 export default function Hero() {
-  return (
-    <section className="relative w-full bg-gradient-to-b from-[#D0EEDB] to-white pt-28 pb-16 text-center overflow-hidden font-sans">
-      
-      {/* Soft Glow Effects */}
-      <div className="absolute top-[-10rem] left-1/2 -translate-x-1/2 w-[50rem] h-[50rem] bg-green-200 opacity-25 rounded-full blur-[200px] z-0"></div>
-      <div className="absolute bottom-[-12rem] right-[-12rem] w-[35rem] h-[35rem] bg-green-100 opacity-30 rounded-full blur-[160px] z-0"></div>
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const textOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.7]);
 
-      {/* SVG Shape Divider */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden z-0">
-        <svg viewBox="0 0 1440 320" className="w-full h-32">
-          <path
-            fill="#E8F5E9"
-            d="M0,224L48,202.7C96,181,192,139,288,122.7C384,107,480,117,576,117.3C672,117,768,107,864,117.3C960,128,1056,160,1152,186.7C1248,213,1344,235,1392,245.3L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-          ></path>
-        </svg>
+  return (
+    <section ref={heroRef} className="relative w-full bg-[#D0EEDB] pt-28 pb-16 text-center overflow-hidden font-sans">
+
+      {/* Animated Background Blobs */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute top-[-20%] left-1/2 transform -translate-x-1/2 w-[60rem] h-[60rem] bg-green-200 opacity-20 rounded-full blur-[200px] animate-blob-slow" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[40rem] h-[40rem] bg-green-100 opacity-20 rounded-full blur-[160px] animate-blob-slow-reverse" />
       </div>
+
+      {/* Parallax Floating Shapes */}
+      <div className="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full backdrop-blur-md animate-float-slow"></div>
+      <div className="absolute bottom-20 right-20 w-16 h-16 bg-white/10 rounded-full backdrop-blur-md animate-float-slower"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-14 md:gap-24">
         
         {/* Text Content */}
-        <div className="flex-1 space-y-6 text-center md:text-left">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight"
-          >
+        <motion.div style={{ y: textY, opacity: textOpacity }} className="flex-1 space-y-6 text-center md:text-left">
+          <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight">
             Reclaim Your Digital Life with{' '}
             <span className="bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent">
               Everwell
             </span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-lg md:text-xl text-gray-600 max-w-lg leading-relaxed"
-          >
+          <p className="text-lg md:text-xl text-gray-600 max-w-lg leading-relaxed">
             A wellness-first approach to screen time, crafted for mindful living. It&apos;s not just another tracker—it&apos;s your digital reset button.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex justify-center md:justify-start gap-4"
-          >
+          <div className="flex justify-center md:justify-start gap-4">
             <Link
               href="/sign-up"
-              className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl text-base font-semibold shadow-md transition"
+              className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-700 text-white rounded-xl text-base font-semibold shadow-md transition hover:shadow-lg hover:scale-105"
             >
               Get Started
             </Link>
             <a
               href="#features"
-              className="px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-xl text-base font-semibold shadow-sm hover:shadow-md transition"
+              className="px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-xl text-base font-semibold shadow-sm hover:shadow-md hover:scale-105 transition"
             >
               Learn More
             </a>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
-        {/* Animated Illustration */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="flex-1 flex justify-center"
-        >
+        {/* 3D Tilt Hero Illustration */}
+        <Tilt tiltMaxAngleX={10} tiltMaxAngleY={10} glareEnable={false} scale={1.05} className="flex-1">
           <Image
             src="/illustrations/mindful.svg"
             alt="Mindful Thinking Illustration"
@@ -83,8 +66,40 @@ export default function Hero() {
             className="w-full max-w-md h-auto"
             priority
           />
-        </motion.div>
+        </Tilt>
       </div>
+
+      {/* CSS Animations */}
+      <style jsx>{`
+        @keyframes blobSlow {
+          0%, 100% { transform: translate(-50%, -50%) scale(1); }
+          50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+        @keyframes blobSlowReverse {
+          0%, 100% { transform: translate(0%, 0%) scale(1); }
+          50% { transform: translate(0%, 0%) scale(1.07); }
+        }
+        @keyframes floatSlow {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        @keyframes floatSlower {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(15px); }
+        }
+        .animate-blob-slow {
+          animation: blobSlow 10s ease-in-out infinite;
+        }
+        .animate-blob-slow-reverse {
+          animation: blobSlowReverse 12s ease-in-out infinite;
+        }
+        .animate-float-slow {
+          animation: floatSlow 6s ease-in-out infinite;
+        }
+        .animate-float-slower {
+          animation: floatSlower 8s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 }
